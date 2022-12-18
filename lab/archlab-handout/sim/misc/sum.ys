@@ -1,0 +1,39 @@
+# I deliberately make the sum_list be invoked in the entry, 
+# and omit the conventional main function.
+# It seems this also works.
+
+# main function's execution begins at adress 0
+    .pos 0
+    irmovq stack, %rsp
+    irmovq ele1, %rdi
+    call sum_list
+    halt
+
+# sum_list function
+sum_list:
+    xorq %rax, %rax
+    irmovq $8, %rdx
+    jmp sum_list_test
+sum_list_loop:
+    mrmovq (%rdi), %rcx
+    addq %rcx, %rax
+    mrmovq 8(%rdi), %rdi
+sum_list_test:
+    andq %rdi, %rdi
+    jne sum_list_loop
+    ret
+
+.align 8
+ele1:
+    .quad 0x00a
+    .quad ele2
+ele2:
+    .quad 0x0b0
+    .quad ele3
+ele3:
+    .quad 0xc00
+    .quad 0
+
+# setup stack
+    .pos 0x200
+stack:
