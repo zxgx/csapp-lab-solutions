@@ -1,3 +1,5 @@
 .vscode/
 code/
 *.tar
+*.yo
+*.o
