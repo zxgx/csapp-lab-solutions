@@ -84,3 +84,27 @@ The benchmark of my solutions. All the files are listed in the `sim/pipe` dir.
 
 This lab and the corresponding Chapter 4 and Chapter 5 are miserable and kind of confusing.
 I suppose there are a large number of topics which are not discussed, and the discussed issues in the two chapters also contains unmentioned details.
+
+
+## lab 5: cache lab
+The setup and evaluation instructions are illustrated in the file `cachelab.pdf`.
+
+### Part A: csim.c
+The cache simulator is easy. Load operation on cache has a pattern similar to Save operation, while the Modify operation consists of a Load operation followed by a Save operation.
+
+### Part B: trans.c
+#### 32x32 matrix  
+The solution depends on splitting the matrix into blocks.  
+To resolve the conflicts on the diagonal, we can resort to the loop unrolling technique.
+
+#### 64x64 matrix
+The memory address pattern of this matrix is tricky, as each 4 lines share the same cache address, which makes the unrolling technique in the previous one invalid.
+To resolve this problem, we need some subtle operations inside each blocks, that is, copy/transpose each block by 4x4 sub-blocks.
+By separately handling the diagonal blocks, my solution further reduces 40 cache misses. 
+
+My digest: try to analyse the address pattern of the first two blocks. The key problem is how to eliminate the cache miss for the bottom right sub-block.
+
+#### 61x67 matrix
+Since there is no particular pattern on the memory address, we could resolve this question by implementing a general block-based matrix copy and conducting a series of experiments to gain the result.
+
+中文参考：https://zhuanlan.zhihu.com/p/456858668
