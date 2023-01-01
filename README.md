@@ -108,3 +108,11 @@ My digest: try to analyse the address pattern of the first two blocks. The key p
 Since there is no particular pattern on the memory address, we could resolve this question by implementing a general block-based matrix copy and conducting a series of experiments to gain the result.
 
 中文参考：https://zhuanlan.zhihu.com/p/456858668
+
+
+## lab 6: shell lab
+Instructions for setup and evaluation are listed in `shlab-handout/shlab.pdf`.
+
+Generally, there are two differences between my implementation and the requirements.
+1. I use `sigsuspend` instead of `sleep` in `waitfg` to hang the foreground process.
+2. In the handler for `SIGCHLD`, I adopt while loop to reap all child processes at one time.
