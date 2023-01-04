@@ -116,3 +116,12 @@ Instructions for setup and evaluation are listed in `shlab-handout/shlab.pdf`.
 Generally, there are two differences between my implementation and the requirements.
 1. I use `sigsuspend` instead of `sleep` in `waitfg` to hang the foreground process.
 2. In the handler for `SIGCHLD`, I adopt while loop to reap all child processes at one time.
+
+## lab 7: malloc lab
+
+Performance = (util + thru) / 100
+
+|  setup      | short1-bal.rep | short2-bal.rep |
+| :-----:     | :------------: | :------------: |
+|  origin     |  30 + 40       |  60 + 40       |
+|  reference  |  40 + 40       |  54 + 40       |
