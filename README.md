@@ -118,10 +118,22 @@ Generally, there are two differences between my implementation and the requireme
 2. In the handler for `SIGCHLD`, I adopt while loop to reap all child processes at one time.
 
 ## lab 7: malloc lab
+Instructions for setup and evaluation are listed in `malloclab-handout/malloclab.pdf`.  
+The official handout does not provide trace files. My results are tested on traces files cloned from this [repo](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces).
 
+Below is the benchmark of my solutions. One can checkout to the corresponding commit to see the code and result.  
 Performance = (util + thru) / 100
 
-|  setup      | short1-bal.rep | short2-bal.rep |
-| :-----:     | :------------: | :------------: |
-|  origin     |  30 + 40       |  60 + 40       |
-|  reference  |  40 + 40       |  54 + 40       |
+|  setup      | Perf index |
+| :-----:     | :--------: |
+|  origin     |  30 + 40   |
+|  reference  |  40 + 40   |
+|  opt ref    |  44 + 24   |
+
+
+- origin: simple implementation in the init handout
+- reference: implicitly free list analysed in the textbook
+- opt ref: optimized implicitly free list with removing allocated blocks' footer
+
+As indicated by the benchmark, original implementation is of sufficient throughput, and we should improve the memory utilization.  
+Since no global compound data structures are allowed, I suppose the **segregated storage** described in the Section 9.9.14 is also not allowed.
