@@ -117,23 +117,26 @@ Generally, there are two differences between my implementation and the requireme
 1. I use `sigsuspend` instead of `sleep` in `waitfg` to hang the foreground process.
 2. In the handler for `SIGCHLD`, I adopt while loop to reap all child processes at one time.
 
-## lab 7: malloc lab
+## lab 7: malloc lab (Ill solution)
 Instructions for setup and evaluation are listed in `malloclab-handout/malloclab.pdf`.  
 The official handout does not provide trace files. My results are tested on traces files cloned from this [repo](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces).
 
-Below is the benchmark of my solutions. One can checkout to the corresponding commit to see the code and result.  
+Below is the benchmark of my 64&32-clean solutions. One can checkout to the corresponding commit to see the code and result.  
 Performance = (util + thru) / 100
 
 |  setup      | Perf index |
 | :-----:     | :--------: |
-|  origin     |  30 + 40   |
-|  reference  |  40 + 40   |
+|  origin     |  -  + -    |
+|  reference  |  44 + 24   |
 |  opt ref    |  44 + 24   |
+|  exp list   |  -  + -    |
 
+- origin: simple implementation in the init handout (mdriver reports errors on this version).
+- reference: implicitly free list analysed in the textbook (Section 9.9.12).
+- opt ref: optimized implicitly free list with removing allocated blocks' footer (Section 9.9.11).
+- exp list: explicitly free list. Free blocks are sorted by address. (Section 9.9.13).
 
-- origin: simple implementation in the init handout
-- reference: implicitly free list analysed in the textbook
-- opt ref: optimized implicitly free list with removing allocated blocks' footer
+Note: `exp list` has segmentation fault in several trace files, while it could pass the two short trace files. 
+For example, the `amptjp-bal.rep` would report fault after invoking thousands of malloc and free. It's extremely tough to debug, so I have no choice but give up.
 
-As indicated by the benchmark, original implementation is of sufficient throughput, and we should improve the memory utilization.  
-Since no global compound data structures are allowed, I suppose the **segregated storage** described in the Section 9.9.14 is also not allowed.
+Section 9.9.14 discusses another technique, segregated storage. As no compound data types are allowed, we can save the lists of different block size into the begining of heap. Then, the operations are similar to `exp list` version.

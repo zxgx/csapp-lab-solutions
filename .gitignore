@@ -3,3 +3,4 @@ code/
 *.tar
 *.yo
 *.o
+lab/malloclab-handout/traces/
