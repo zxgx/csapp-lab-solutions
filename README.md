@@ -117,7 +117,7 @@ Generally, there are two differences between my implementation and the requireme
 1. I use `sigsuspend` instead of `sleep` in `waitfg` to hang the foreground process.
 2. In the handler for `SIGCHLD`, I adopt while loop to reap all child processes at one time.
 
-## lab 7: malloc lab (Ill solution)
+## lab 7: malloc lab (ill solution)
 Instructions for setup and evaluation are listed in `malloclab-handout/malloclab.pdf`.  
 The official handout does not provide trace files. My results are tested on traces files cloned from this [repo](https://github.com/Deconx/CSAPP-Lab/tree/master/initial_labs/08_Malloc%20Lab/traces).
 
@@ -140,3 +140,18 @@ Note: `exp list` has segmentation fault in several trace files, while it could p
 For example, the `amptjp-bal.rep` would report fault after invoking thousands of malloc and free. It's extremely tough to debug, so I have no choice but give up.
 
 Section 9.9.14 discusses another technique, segregated storage. As no compound data types are allowed, we can save the lists of different block size into the begining of heap. Then, the operations are similar to `exp list` version.
+
+
+## lab 8: proxy lab
+Instructions are described in `proxylab-handout/proxylab.pdf`.  
+
+### additional note
+- curl is used to debug/test/autograde the solution.
+However, the curl version in the wsl is not compatible with the `HTTP/1.0`, and it would report `Received HTTP/0.9 when not allowed`.
+So I added `--http0.9` option in the `driver.sh` for autograding. During testing or debugging, one also needs to add this option in cmd line.
+
+- `/usr/bin/python` does not exist in my wsl. I changed it into `/usr/bin/python3` in the `nop-server.py`.
+
+- I introduced the `sbuf` lib from the offical code examples to implement the producer-consumer model for the concurrency version.
+
+- I did not implement the cache, since I used producer-consumer model to implement the concurrency version. Basically, one can refer to Fig. 12-26 in Section 12.5.4 to implement the reader-writer model for the cache.
